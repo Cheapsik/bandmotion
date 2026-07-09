@@ -1,5 +1,13 @@
+const BASE = self.location.pathname.replace(/sw\.js$/, '');
 const CACHE_NAME = 'bandmotion-v1';
-const PRECACHE = ['/', '/index.html', '/manifest.json', '/favicon.svg', '/icons/icon-192.png', '/icons/icon-512.png'];
+const PRECACHE = [
+  BASE,
+  `${BASE}index.html`,
+  `${BASE}manifest.json`,
+  `${BASE}favicon.svg`,
+  `${BASE}icons/icon-192.png`,
+  `${BASE}icons/icon-512.png`,
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -38,7 +46,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           return response;
         })
-        .catch(() => caches.match('/index.html'));
+        .catch(() => caches.match(`${BASE}index.html`));
     }),
   );
 });
